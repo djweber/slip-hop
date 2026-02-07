@@ -36,5 +36,3 @@ go.work.sum
 
 # Local config
 config.local.json
-
-.build/

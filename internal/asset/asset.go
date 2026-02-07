@@ -9,7 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
-//go:embed font/* image/* shader/*
+//go:embed font/*
 var files embed.FS
 
 const (
