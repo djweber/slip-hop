@@ -8,7 +8,7 @@ import (
 
 type Game struct {
 	ActiveScene               Scene
-	RenderWidth, RenderHeight int
+	LayoutWidth, LayoutHeight int
 }
 
 func (g *Game) Update() error {
@@ -21,21 +21,24 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(_, _ int) (screenWidth, screenHeight int) {
-	return g.RenderWidth, g.RenderHeight
-}
-
-func NewGame() Game {
-	cfg := &menu.Config{}
-
-	initialScene := menu.NewMenu(cfg)
-
-	return Game{
-		ActiveScene:  initialScene,
-		RenderWidth:  238,
-		RenderHeight: 512,
-	}
+	return g.LayoutWidth, g.LayoutHeight
 }
 
 type Config struct {
-	InitialScene Scene
+	Title                     string
+	LayoutWidth, LayoutHeight int
+}
+
+func NewGame(config *Config) Game {
+	menuConfig := &menu.Config{
+		Title:        config.Title,
+		LayoutWidth:  config.LayoutWidth,
+		LayoutHeight: config.LayoutHeight,
+	}
+
+	return Game{
+		ActiveScene:  menu.NewMenu(menuConfig),
+		LayoutWidth:  config.LayoutWidth,
+		LayoutHeight: config.LayoutHeight,
+	}
 }

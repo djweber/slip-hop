@@ -9,16 +9,19 @@ import (
 )
 
 type Menu struct {
+	title                     string
+	textFace                  text.Face
 	layoutWidth, layoutHeight int
 }
 
 func (menu *Menu) Draw(screen *ebiten.Image) {
-	title := "SLIP-HOP"
-	textFace := asset.LoadTextFace(asset.Asset04b03Font, 32)
+	title := menu.title
 	op := &text.DrawOptions{}
 	op.ColorScale.ScaleWithColor(color.White)
-	op.GeoM.Translate(50, 50)
-	text.Draw(screen, title, textFace, op)
+	op.PrimaryAlign = text.AlignCenter
+	op.SecondaryAlign = text.AlignCenter
+	op.GeoM.Translate(float64(menu.layoutWidth/2), 64)
+	text.Draw(screen, title, menu.textFace, op)
 }
 
 func (menu *Menu) Update() error {
@@ -26,11 +29,16 @@ func (menu *Menu) Update() error {
 }
 
 type Config struct {
+	Title                     string
 	LayoutWidth, LayoutHeight int
 }
 
 func NewMenu(cfg *Config) *Menu {
+	textFace := asset.LoadTextFace(asset.Font04b03, 32)
+
 	return &Menu{
+		title:        cfg.Title,
+		textFace:     textFace,
 		layoutWidth:  cfg.LayoutWidth,
 		layoutHeight: cfg.LayoutHeight,
 	}

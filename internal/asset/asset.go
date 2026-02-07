@@ -13,7 +13,7 @@ import (
 var files embed.FS
 
 const (
-	Asset04b03Font = "font/04b03.ttf"
+	Font04b03 = "font/04b03.ttf"
 )
 
 func LoadTextFace(path string, size int) text.Face {

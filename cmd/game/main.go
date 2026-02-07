@@ -2,10 +2,8 @@ package main
 
 import (
 	"lock-on-labs/slip-hop/internal/game"
-	"lock-on-labs/slip-hop/internal/window/theme/windows"
-	"lock-on-labs/slip-hop/internal/window/theme/windows/backdrop"
+	"lock-on-labs/slip-hop/internal/window/theme"
 	"log"
-	"runtime"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -14,17 +12,23 @@ const (
 	title        = "SLIP-HOP"
 	windowWidth  = 576
 	windowHeight = 1024
+	layoutWidth  = windowWidth / 2
+	layoutHeight = windowHeight / 2
 )
 
 func main() {
 	ebiten.SetWindowTitle(title)
 	ebiten.SetWindowSize(windowWidth, windowHeight)
 
-	if runtime.GOOS == "windows" {
-		go windows.ApplyBackdrop(backdrop.Auto)
+	theme.ApplyTheme()
+
+	config := &game.Config{
+		Title:        title,
+		LayoutWidth:  layoutWidth,
+		LayoutHeight: layoutHeight,
 	}
 
-	g := game.NewGame()
+	g := game.NewGame(config)
 
 	err := ebiten.RunGame(&g)
 
