@@ -38,8 +38,8 @@ func (c *Clickable) Draw(*ebiten.Image) {
 	// no-op
 }
 
-func NewClickable(bounds image.Rectangle, onClick func(), inset int) *Clickable {
-	insetBounds := bounds.Inset(inset / 2)
+func NewClickable(bounds image.Rectangle, onClick func(), margin int) *Clickable {
+	insetBounds := bounds.Inset(-margin / 2)
 	return &Clickable{
 		OnClick:     onClick,
 		Rectangle:   insetBounds,

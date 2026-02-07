@@ -47,7 +47,7 @@ func NewTextButton(config *Config) *TextButton {
 
 	bounds := image.Rect(x0, y0, x1, y1)
 
-	clickable := input.NewClickable(bounds, config.OnClick, -16)
+	clickable := input.NewClickable(bounds, config.OnClick, 16)
 
 	return &TextButton{
 		config,
