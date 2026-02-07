@@ -2,7 +2,7 @@ package windows
 
 import (
 	"fmt"
-	"lock-on-labs/slip-hop/internal/window/theme/windows/backdrop"
+	"lock-on-labs/slip-hop/internal/ui/window/theme/windows/backdrop"
 	"os"
 	"syscall"
 	"time"

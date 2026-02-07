@@ -1,4 +1,4 @@
-package game
+package ui
 
 type Scene interface {
 	Drawable

@@ -1,27 +1,28 @@
 package game
 
 import (
-	"lock-on-labs/slip-hop/internal/scene/menu"
+	"lock-on-labs/slip-hop/internal/ui"
+	"lock-on-labs/slip-hop/internal/ui/scene/menu"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Game struct {
-	ActiveScene               Scene
-	LayoutWidth, LayoutHeight int
+	activeScene               ui.Scene
+	layoutWidth, layoutHeight int
 }
 
 func (g *Game) Update() error {
-	err := g.ActiveScene.Update()
+	err := g.activeScene.Update()
 	return err
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	g.ActiveScene.Draw(screen)
+	g.activeScene.Draw(screen)
 }
 
 func (g *Game) Layout(_, _ int) (screenWidth, screenHeight int) {
-	return g.LayoutWidth, g.LayoutHeight
+	return g.layoutWidth, g.layoutHeight
 }
 
 type Config struct {
@@ -37,8 +38,8 @@ func NewGame(config *Config) Game {
 	}
 
 	return Game{
-		ActiveScene:  menu.NewMenu(menuConfig),
-		LayoutWidth:  config.LayoutWidth,
-		LayoutHeight: config.LayoutHeight,
+		activeScene:  menu.NewMenu(menuConfig),
+		layoutWidth:  config.LayoutWidth,
+		layoutHeight: config.LayoutHeight,
 	}
 }

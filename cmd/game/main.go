@@ -2,7 +2,7 @@ package main
 
 import (
 	"lock-on-labs/slip-hop/internal/game"
-	"lock-on-labs/slip-hop/internal/window/theme"
+	"lock-on-labs/slip-hop/internal/ui/window/theme"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -10,16 +10,15 @@ import (
 
 const (
 	title        = "SLIP-HOP"
-	windowWidth  = 576
-	windowHeight = 1024
-	layoutWidth  = windowWidth / 2
-	layoutHeight = windowHeight / 2
+	layoutWidth  = 288
+	layoutHeight = 512
+	scale        = 2.0
 )
 
 func main() {
 	ebiten.SetWindowTitle(title)
-	ebiten.SetWindowSize(windowWidth, windowHeight)
-
+	ebiten.SetWindowSize(layoutWidth*scale, layoutHeight*scale)
+	ebiten.SetWindowFloating(true)
 	theme.ApplyTheme()
 
 	config := &game.Config{
