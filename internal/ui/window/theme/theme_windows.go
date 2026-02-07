@@ -8,5 +8,5 @@ import (
 )
 
 func ApplyTheme() {
-	go windows.ApplyBackdrop(backdrop.Auto)
+	go windows.ApplyBackdrop(backdrop.MainWindow)
 }

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"lock-on-labs/slip-hop/internal/asset"
 	"lock-on-labs/slip-hop/internal/ui"
-	"lock-on-labs/slip-hop/internal/ui/button"
 	"lock-on-labs/slip-hop/internal/ui/label"
+	"lock-on-labs/slip-hop/internal/ui/text_button"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -39,7 +39,7 @@ type Config struct {
 func NewMenu(cfg *Config) *Menu {
 	drawables := make([]ui.Drawable, 0)
 
-	titleTextFace := asset.LoadTextFace(asset.Font04b03, 32)
+	titleTextFace := asset.LoadTextFace(asset.Font04b03, 48)
 
 	titleLabel := label.NewLabel(&label.Config{
 		Title:    cfg.Title,
@@ -50,11 +50,13 @@ func NewMenu(cfg *Config) *Menu {
 
 	drawables = append(drawables, titleLabel)
 
-	playButton := button.NewButton(&button.Config{
-		X:      cfg.LayoutWidth / 2,
-		Y:      cfg.LayoutHeight / 2,
-		Width:  64,
-		Height: 32,
+	buttonTextFace := asset.LoadTextFace(asset.Font04b03, 32)
+
+	playButton := text_button.NewTextButton(&text_button.Config{
+		Text:     "Play",
+		TypeFace: buttonTextFace,
+		X:        cfg.LayoutWidth / 2,
+		Y:        cfg.LayoutHeight / 2,
 		OnClick: func() {
 			fmt.Println("Clicked")
 		},

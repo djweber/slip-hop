@@ -18,7 +18,6 @@ const (
 func main() {
 	ebiten.SetWindowTitle(title)
 	ebiten.SetWindowSize(layoutWidth*scale, layoutHeight*scale)
-	ebiten.SetWindowFloating(true)
 	theme.ApplyTheme()
 
 	config := &game.Config{
