@@ -12,7 +12,7 @@ const (
 	title        = "SLIP-HOP"
 	layoutWidth  = 288
 	layoutHeight = 512
-	scale        = 2.0
+	scale        = 2
 )
 
 func main() {
