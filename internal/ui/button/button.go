@@ -3,6 +3,7 @@ package button
 import (
 	"image"
 	"image/color"
+	"lock-on-labs/slip-hop/internal/ui/input"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -10,27 +11,14 @@ import (
 
 type Button struct {
 	*Config
-	image.Rectangle
-	isMouseDown bool
-	isMouseUp   bool
+	*image.Rectangle
+	clickable *input.Clickable
 }
 
 func (b *Button) Update() error {
-	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		x, y := ebiten.CursorPosition()
-
-		if x >= b.Min.X && x <= b.Max.X && y >= b.Min.Y && y <= b.Max.Y {
-			b.isMouseDown = true
-		} else {
-			b.isMouseDown = false
-		}
-	} else {
-		if b.isMouseDown {
-			if b.OnClick != nil {
-				b.OnClick()
-			}
-		}
-		b.isMouseDown = false
+	err := b.clickable.Update()
+	if err != nil {
+		return err
 	}
 	return nil
 }
@@ -46,13 +34,16 @@ type Config struct {
 
 func NewButton(config *Config) *Button {
 	bx := config.X - config.Width/2
+
 	by := config.Y - config.Height/2
+
 	bounds := image.Rect(bx, by, bx+config.Width, by+config.Height)
+
+	clickable := input.NewClickable(bounds, config.OnClick)
 
 	return &Button{
 		config,
-		bounds,
-		false,
-		true,
+		&bounds,
+		clickable,
 	}
 }
