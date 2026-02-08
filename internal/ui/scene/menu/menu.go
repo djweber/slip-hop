@@ -80,7 +80,7 @@ func NewMenu(cfg *Config) *Menu {
 	copyrightLabel := label.NewLabel(&label.Config{
 		Title:    copyright,
 		TextFace: copyrightTextFace,
-		Color:    color.NRGBA{R: 0xff, G: 0xff, B: 0xff, A: 0x22},
+		Color:    color.NRGBA{R: 0xff, G: 0xff, B: 0xff, A: 0x20},
 		X:        float64(cfg.LayoutWidth / 2),
 		Y:        float64(cfg.LayoutHeight - paddingBottom),
 	})
