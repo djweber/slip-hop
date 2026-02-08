@@ -1,8 +1,8 @@
 package main
 
 import (
-	"lock-on-labs/slip-hop/internal/game"
-	"lock-on-labs/slip-hop/internal/ui/window/theme"
+	"djweber/slip-hop/internal/game"
+	"djweber/slip-hop/internal/ui/window/theme"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"

@@ -1,8 +1,8 @@
 package game
 
 import (
-	"lock-on-labs/slip-hop/internal/ui"
-	"lock-on-labs/slip-hop/internal/ui/scene/menu"
+	"djweber/slip-hop/internal/ui"
+	"djweber/slip-hop/internal/ui/scene/menu"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )

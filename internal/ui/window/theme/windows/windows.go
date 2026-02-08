@@ -1,8 +1,8 @@
 package windows
 
 import (
+	"djweber/slip-hop/internal/ui/window/theme/windows/backdrop"
 	"fmt"
-	"lock-on-labs/slip-hop/internal/ui/window/theme/windows/backdrop"
 	"os"
 	"syscall"
 	"time"

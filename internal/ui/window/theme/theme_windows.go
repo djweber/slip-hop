@@ -3,8 +3,8 @@
 package theme
 
 import (
-	"lock-on-labs/slip-hop/internal/ui/window/theme/windows"
-	"lock-on-labs/slip-hop/internal/ui/window/theme/windows/backdrop"
+	"djweber/slip-hop/internal/ui/window/theme/windows"
+	"djweber/slip-hop/internal/ui/window/theme/windows/backdrop"
 )
 
 func ApplyTheme() {

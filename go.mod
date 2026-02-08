@@ -1,4 +1,4 @@
-module lock-on-labs/slip-hop
+module djweber/slip-hop
 
 go 1.25.6
 

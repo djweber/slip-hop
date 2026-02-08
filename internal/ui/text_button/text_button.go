@@ -1,8 +1,8 @@
 package text_button
 
 import (
+	"djweber/slip-hop/internal/ui/input"
 	"image"
-	"lock-on-labs/slip-hop/internal/ui/input"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"

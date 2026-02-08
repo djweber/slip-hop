@@ -1,11 +1,11 @@
 package menu
 
 import (
+	"djweber/slip-hop/internal/asset"
+	"djweber/slip-hop/internal/ui"
+	"djweber/slip-hop/internal/ui/label"
+	"djweber/slip-hop/internal/ui/text_button"
 	"fmt"
-	"lock-on-labs/slip-hop/internal/asset"
-	"lock-on-labs/slip-hop/internal/ui"
-	"lock-on-labs/slip-hop/internal/ui/label"
-	"lock-on-labs/slip-hop/internal/ui/text_button"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
