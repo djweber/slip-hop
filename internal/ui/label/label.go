@@ -18,16 +18,18 @@ func (l *Label) Update() error {
 func (l *Label) Draw(screen *ebiten.Image) {
 	title := l.Title
 	op := &text.DrawOptions{}
-	op.ColorScale.ScaleWithColor(color.White)
+	op.ColorScale.ScaleWithColor(l.Color)
 	op.PrimaryAlign = text.AlignCenter
 	op.SecondaryAlign = text.AlignCenter
 	op.GeoM.Translate(l.X, l.Y)
+	op.Filter = ebiten.FilterNearest
 	text.Draw(screen, title, l.TextFace, op)
 }
 
 type Config struct {
 	Title    string
 	TextFace text.Face
+	Color    color.Color
 	X, Y     float64
 }
 

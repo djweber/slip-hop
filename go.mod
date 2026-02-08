@@ -4,6 +4,7 @@ go 1.25.6
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.9.8
+	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	golang.org/x/sys v0.40.0
 )
 
