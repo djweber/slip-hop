@@ -7,11 +7,12 @@ import (
 )
 
 type Clickable struct {
-	OnClick func()
+	OnClick     func()
+	OnMouseDown func()
+	OnMouseUp   func()
 	image.Rectangle
 	padding     int
 	isMouseDown bool
-	isMouseUp   bool
 }
 
 func (c *Clickable) Update() error {
@@ -20,6 +21,9 @@ func (c *Clickable) Update() error {
 
 		if x >= c.Min.X && x <= c.Max.X && y >= c.Min.Y && y <= c.Max.Y {
 			c.isMouseDown = true
+			if c.OnMouseDown != nil {
+				c.OnMouseDown()
+			}
 		} else {
 			c.isMouseDown = false
 		}
@@ -29,7 +33,12 @@ func (c *Clickable) Update() error {
 				c.OnClick()
 			}
 		}
+
 		c.isMouseDown = false
+
+		if c.OnMouseUp != nil {
+			c.OnMouseUp()
+		}
 	}
 	return nil
 }
@@ -38,12 +47,15 @@ func (c *Clickable) Draw(*ebiten.Image) {
 	// no-op
 }
 
-func NewClickable(bounds image.Rectangle, onClick func(), margin int) *Clickable {
-	insetBounds := bounds.Inset(-margin / 2)
+// NewClickable creates a new Clickable to attach to other Drawables. The target bounds b
+// can be extended by providing a margin m.
+func NewClickable(b image.Rectangle, m int, oc func(), omd func(), omu func()) *Clickable {
+	insetBounds := b.Inset(-m / 2)
 	return &Clickable{
-		OnClick:     onClick,
+		OnClick:     oc,
+		OnMouseDown: omd,
+		OnMouseUp:   omu,
 		Rectangle:   insetBounds,
 		isMouseDown: false,
-		isMouseUp:   true,
 	}
 }
