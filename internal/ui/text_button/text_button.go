@@ -23,8 +23,6 @@ func (b *TextButton) Draw(screen *ebiten.Image) {
 
 	if b.isPressed {
 		offset = 1
-	} else {
-		offset = 0
 	}
 
 	textOptions := &text.DrawOptions{}
