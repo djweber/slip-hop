@@ -3,21 +3,24 @@ package asset
 import (
 	"bytes"
 	"embed"
+	"image"
 	"io"
 	"log"
 
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
-//go:embed font/*
-var files embed.FS
+//go:embed font/* image/*
+var fs embed.FS
 
 const (
-	Font04b03 = "font/04b03.ttf"
+	ImageBackground = "image/background.png"
+	Font04b03       = "font/04b03.ttf"
 )
 
 func LoadTextFace(path string, size int) text.Face {
-	fontFile, err := files.Open(path)
+	fontFile, err := fs.Open(path)
 
 	if err != nil {
 		log.Fatal(err)
@@ -43,4 +46,14 @@ func LoadTextFace(path string, size int) text.Face {
 	}
 
 	return &face
+}
+
+func LoadImage(path string) image.Image {
+	img, _, err := ebitenutil.NewImageFromFileSystem(fs, path)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return img
 }

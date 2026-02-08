@@ -20,13 +20,13 @@ func main() {
 	ebiten.SetWindowSize(layoutWidth*scale, layoutHeight*scale)
 	theme.ApplyTheme()
 
-	config := &game.Config{
+	cfg := &game.Config{
 		Title:        title,
 		LayoutWidth:  layoutWidth,
 		LayoutHeight: layoutHeight,
 	}
 
-	g := game.NewGame(config)
+	g := game.NewGame(cfg)
 
 	err := ebiten.RunGame(&g)
 

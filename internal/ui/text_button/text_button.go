@@ -18,20 +18,20 @@ func (b *TextButton) Update() error {
 	return b.clickable.Update()
 }
 
-func (b *TextButton) Draw(screen *ebiten.Image) {
-	var offset int
+func (b *TextButton) Draw(img *ebiten.Image) {
+	var o int
 
 	if b.isPressed {
-		offset = 1
+		o = 1
 	}
 
-	textOptions := &text.DrawOptions{}
-	textOptions.PrimaryAlign = text.AlignCenter   // x-axis
-	textOptions.SecondaryAlign = text.AlignCenter // y-axis
-	textOptions.GeoM.Translate(float64(b.X+offset), float64(b.Y+offset))
-	textOptions.ColorScale = ebiten.ColorScale{}
-	textOptions.Filter = ebiten.FilterNearest
-	text.Draw(screen, b.Text, b.TypeFace, textOptions)
+	to := &text.DrawOptions{}
+	to.PrimaryAlign = text.AlignCenter   // x-axis
+	to.SecondaryAlign = text.AlignCenter // y-axis
+	to.GeoM.Translate(float64(b.X), float64(b.Y+o))
+	to.ColorScale = ebiten.ColorScale{}
+	to.Filter = ebiten.FilterNearest
+	text.Draw(img, b.Text, b.TypeFace, to)
 }
 
 type Config struct {
@@ -41,23 +41,23 @@ type Config struct {
 	OnClick  func()
 }
 
-func NewTextButton(config *Config) *TextButton {
-	w, h := text.Measure(config.Text, config.TypeFace, 0)
-	x0 := config.X - int(w)/2
-	y0 := config.Y - int(h)/2
+func NewTextButton(c *Config) *TextButton {
+	w, h := text.Measure(c.Text, c.TypeFace, 0)
+	x0 := c.X - int(w)/2
+	y0 := c.Y - int(h)/2
 	x1 := x0 + int(w)
 	y1 := y0 + int(h)
 
 	b := image.Rect(x0, y0, x1, y1)
 
 	btn := &TextButton{
-		Config: config,
+		Config: c,
 	}
 
 	btn.clickable = input.NewClickable(
 		b,
 		16,
-		config.OnClick,
+		c.OnClick,
 		func() {
 			btn.isPressed = true
 		},

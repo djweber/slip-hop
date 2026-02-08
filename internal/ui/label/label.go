@@ -15,15 +15,14 @@ func (l *Label) Update() error {
 	return nil
 }
 
-func (l *Label) Draw(screen *ebiten.Image) {
-	title := l.Title
-	op := &text.DrawOptions{}
-	op.ColorScale.ScaleWithColor(l.Color)
-	op.PrimaryAlign = text.AlignCenter
-	op.SecondaryAlign = text.AlignCenter
-	op.GeoM.Translate(l.X, l.Y)
-	op.Filter = ebiten.FilterNearest
-	text.Draw(screen, title, l.TextFace, op)
+func (l *Label) Draw(img *ebiten.Image) {
+	do := &text.DrawOptions{}
+	do.ColorScale.ScaleWithColor(l.Color)
+	do.PrimaryAlign = text.AlignCenter
+	do.SecondaryAlign = text.AlignCenter
+	do.GeoM.Translate(l.X, l.Y)
+	do.Filter = ebiten.FilterNearest
+	text.Draw(img, l.Title, l.TextFace, do)
 }
 
 type Config struct {
@@ -33,8 +32,8 @@ type Config struct {
 	X, Y     float64
 }
 
-func NewLabel(config *Config) *Label {
+func NewLabel(c *Config) *Label {
 	return &Label{
-		*config,
+		*c,
 	}
 }
