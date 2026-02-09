@@ -67,7 +67,9 @@ func (n *Navigator) Push(dst ui.GameObject, t Transition) {
 }
 
 func (n *Navigator) Pop() {
-	n.scenes = n.scenes[:len(n.scenes)-1]
+	if len(n.scenes) == 0 {
+		n.scenes = n.scenes[:len(n.scenes)-1]
+	}
 }
 
 func NewNavigator() *Navigator {
