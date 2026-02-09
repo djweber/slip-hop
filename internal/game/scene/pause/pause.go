@@ -1,4 +1,4 @@
-package play
+package pause
 
 import (
 	"djweber/slip-hop/internal/asset"
@@ -9,7 +9,6 @@ import (
 
 type Pause struct {
 	*scene.BaseScene
-	sm *scene.Navigator
 }
 
 func NewPause(m *scene.Navigator) *Pause {
@@ -21,8 +20,8 @@ func NewPause(m *scene.Navigator) *Pause {
 
 	return &Pause{
 		&scene.BaseScene{
-			Children: d,
+			Navigator: m,
+			Children:  d,
 		},
-		m,
 	}
 }

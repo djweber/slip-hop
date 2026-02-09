@@ -6,6 +6,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+// BaseScene is a [ui.GameObject] that maintains a collection of other GameObjects.
+// It includes boilerplate behavior for rendering and laying out its children.
 type BaseScene struct {
 	*Navigator
 	Children []ui.GameObject
