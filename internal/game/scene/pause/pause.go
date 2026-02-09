@@ -7,21 +7,22 @@ import (
 	"djweber/slip-hop/internal/ui/scene"
 )
 
-type Play struct {
+type Pause struct {
 	*scene.BaseScene
+	sm *scene.Navigator
 }
 
-func NewPlay(n *scene.Navigator) *Play {
+func NewPause(m *scene.Navigator) *Pause {
 	var d []ui.GameObject
 
 	bg := image.NewImage(asset.ImageBackground)
 
 	d = append(d, bg)
 
-	return &Play{
+	return &Pause{
 		&scene.BaseScene{
-			Navigator: n,
-			Children:  d,
+			Children: d,
 		},
+		m,
 	}
 }

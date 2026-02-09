@@ -18,6 +18,8 @@ func (c *CircularTransition) Draw(i *ebiten.Image) {
 
 }
 
-func (c *CircularTransition) Start(cb func()) {
-	cb()
+func (c *CircularTransition) Start(start, end func()) {
+	if end != nil {
+		end()
+	}
 }

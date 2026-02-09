@@ -21,7 +21,7 @@ const (
 
 type Menu struct {
 	*Config
-	*scene.Scene
+	*scene.BaseScene
 }
 
 func (m *Menu) Layout(lw, lh int) {
@@ -35,7 +35,7 @@ func (m *Menu) Layout(lw, lh int) {
 }
 
 func (m *Menu) initDrawables(title string, lw, lh int) {
-	var d []ui.Drawable
+	var d []ui.GameObject
 
 	// background
 	bg := image.NewImage(asset.ImageBackground)
@@ -65,7 +65,7 @@ func (m *Menu) initDrawables(title string, lw, lh int) {
 		Y:        lh / 2,
 		OnClick: func() {
 			p := play.NewPlay(m.Navigator)
-			m.Navigator.Go(p, &transition.CircularTransition{})
+			m.Navigator.Push(p, &transition.CircularTransition{})
 		},
 	})
 

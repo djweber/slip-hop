@@ -41,7 +41,7 @@ func NewGame(config *Config) Game {
 		},
 	)
 
-	n.Current = m
+	n.Push(m, nil)
 
 	return Game{
 		navigator:    n,

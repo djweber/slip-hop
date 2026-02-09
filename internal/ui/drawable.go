@@ -4,7 +4,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type Drawable interface {
+type GameObject interface {
 	Update() error
 	Draw(i *ebiten.Image)
 	Layout(w, h int)
