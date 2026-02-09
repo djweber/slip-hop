@@ -51,7 +51,7 @@ type Config struct {
 func NewMenu(sm *scene.Manager, cfg *Config) *Menu {
 	var m *Menu
 
-	d := make([]ui.Drawable, 0)
+	var d []ui.Drawable
 
 	// background
 	bg := image.NewImage(asset.ImageBackground)
@@ -80,7 +80,7 @@ func NewMenu(sm *scene.Manager, cfg *Config) *Menu {
 		X:        cfg.LayoutWidth / 2,
 		Y:        cfg.LayoutHeight / 2,
 		OnClick: func() {
-			m.manager.Load(&play.Play{}, &transition.CircularTransition{})
+			m.manager.Load(play.NewPlay(m.manager), &transition.CircularTransition{})
 		},
 	})
 
