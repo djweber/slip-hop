@@ -21,7 +21,7 @@ func (g *Game) Draw(img *ebiten.Image) {
 	g.navigator.Draw(img)
 }
 
-func (g *Game) Layout(ww, wh int) (lw, lh int) {
+func (g *Game) Layout(_, _ int) (lw, lh int) {
 	g.navigator.Layout(g.layoutWidth, g.layoutHeight)
 	return g.layoutWidth, g.layoutHeight
 }
@@ -32,19 +32,19 @@ type Config struct {
 }
 
 func NewGame(config *Config) Game {
-	sm := scene.NewNavigator()
+	n := scene.NewNavigator()
 
 	m := menu.NewMenu(
-		sm,
+		n,
 		&menu.Config{
 			Title: config.Title,
 		},
 	)
 
-	sm.Current = m
+	n.Current = m
 
 	return Game{
-		navigator:    sm,
+		navigator:    n,
 		layoutWidth:  config.LayoutWidth,
 		layoutHeight: config.LayoutHeight,
 	}
