@@ -24,13 +24,13 @@ type Menu struct {
 	*scene.BaseScene
 }
 
-func (m *Menu) Layout(lw, lh int) {
+func (m *Menu) Layout(w, h int) {
 	if m.Children == nil {
-		m.initDrawables(m.Title, lw, lh)
+		m.initDrawables(m.Title, w, h)
 	}
 
 	for _, c := range m.Children {
-		c.Layout(lw, lh)
+		c.Layout(w, h)
 	}
 }
 
