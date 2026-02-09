@@ -11,26 +11,26 @@ type Navigator struct {
 	transition Transition
 }
 
-func (m *Navigator) Layout(w, h int) {
-	for _, s := range m.scenes {
+func (n *Navigator) Layout(w, h int) {
+	for _, s := range n.scenes {
 		s.Layout(w, h)
 	}
 
-	if m.transition != nil {
-		m.transition.Layout(w, h)
+	if n.transition != nil {
+		n.transition.Layout(w, h)
 	}
 }
 
-func (m *Navigator) Update() error {
-	for _, s := range m.scenes {
+func (n *Navigator) Update() error {
+	for _, s := range n.scenes {
 		err := s.Update()
 		if err != nil {
 			return err
 		}
 	}
 
-	if m.transition != nil {
-		err := m.transition.Update()
+	if n.transition != nil {
+		err := n.transition.Update()
 		if err != nil {
 			return err
 		}
@@ -39,31 +39,35 @@ func (m *Navigator) Update() error {
 	return nil
 }
 
-func (m *Navigator) Draw(screen *ebiten.Image) {
-	for _, s := range m.scenes {
+func (n *Navigator) Draw(screen *ebiten.Image) {
+	for _, s := range n.scenes {
 		s.Draw(screen)
 	}
-	if m.transition != nil {
-		m.transition.Draw(screen)
+	if n.transition != nil {
+		n.transition.Draw(screen)
 	}
 }
 
-func (m *Navigator) NewScene() *BaseScene {
-	return &BaseScene{Navigator: m}
+func (n *Navigator) NewScene() *BaseScene {
+	return &BaseScene{Navigator: n}
 }
 
 //TODO refactor method to take explicit start/end behavior
 
 // Push pushes a scene onto the navigator's scene stack
-func (m *Navigator) Push(dst ui.GameObject, t Transition) {
-	m.scenes = append(m.scenes, dst)
+func (n *Navigator) Push(dst ui.GameObject, t Transition) {
+	n.scenes = append(n.scenes, dst)
 
 	if t != nil {
-		m.transition = t
+		n.transition = t
 		t.Start(nil, func() {
-			m.transition = nil
+			n.transition = nil
 		})
 	}
+}
+
+func (n *Navigator) Pop() {
+	n.scenes = n.scenes[:len(n.scenes)-1]
 }
 
 func NewNavigator() *Navigator {
