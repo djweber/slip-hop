@@ -14,6 +14,9 @@ type TextButton struct {
 	clickable *input.Clickable
 }
 
+func (b *TextButton) Layout(w, h int) {
+}
+
 func (b *TextButton) Update() error {
 	return b.clickable.Update()
 }

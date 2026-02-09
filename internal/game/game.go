@@ -8,7 +8,7 @@ import (
 )
 
 type Game struct {
-	sceneManager              *scene.Manager
+	sceneManager              *scene.Navigator
 	layoutWidth, layoutHeight int
 }
 
@@ -21,7 +21,8 @@ func (g *Game) Draw(img *ebiten.Image) {
 	g.sceneManager.Draw(img)
 }
 
-func (g *Game) Layout(_, _ int) (screenWidth, screenHeight int) {
+func (g *Game) Layout(ww, wh int) (lw, lh int) {
+	g.sceneManager.Layout(g.layoutWidth, g.layoutHeight)
 	return g.layoutWidth, g.layoutHeight
 }
 
@@ -31,14 +32,12 @@ type Config struct {
 }
 
 func NewGame(config *Config) Game {
-	sm := scene.NewManager()
+	sm := scene.NewNavigator()
 
 	m := menu.NewMenu(
 		sm,
 		&menu.Config{
-			Title:        config.Title,
-			LayoutWidth:  config.LayoutWidth,
-			LayoutHeight: config.LayoutHeight,
+			Title: config.Title,
 		},
 	)
 

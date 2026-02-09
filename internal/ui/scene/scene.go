@@ -6,35 +6,75 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type Scene interface {
-	ui.Drawable
+type Scene struct {
+	*Navigator
+	Children []ui.Drawable
 }
 
-type Manager struct {
-	Current Scene
+func (b *Scene) Layout(w, h int) {
+	for _, d := range b.Children {
+		d.Layout(w, h)
+	}
 }
 
-func (m *Manager) Update() error {
+func (b *Scene) Update() error {
+	if b.Children == nil {
+		return nil
+	}
+
+	for _, d := range b.Children {
+		err := d.Update()
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (b *Scene) Draw(img *ebiten.Image) {
+	if b.Children == nil {
+		return
+	}
+
+	for _, d := range b.Children {
+		d.Draw(img)
+	}
+}
+
+type Navigator struct {
+	Current ui.Drawable
+}
+
+func (m *Navigator) Layout(w, h int) {
+	m.Current.Layout(w, h)
+}
+
+func (m *Navigator) Update() error {
 	return m.Current.Update()
 }
 
-func (m *Manager) Draw(screen *ebiten.Image) {
+func (m *Navigator) Draw(screen *ebiten.Image) {
 	m.Current.Draw(screen)
 }
 
-func (m *Manager) Load(s Scene, t Transition) {
-	m.Current = t
+func (m *Navigator) NewScene() *Scene {
+	return &Scene{Navigator: m}
+}
 
+func (m *Navigator) Go(dst ui.Drawable, t Transition) {
+	m.Current = t
 	t.Start(func() {
-		m.Current = s
+		m.Current = dst
 	})
 }
 
-func NewManager() *Manager {
-	return &Manager{}
+func NewNavigator() *Navigator {
+	return &Navigator{}
 }
 
 type Transition interface {
-	Scene
+	ui.Drawable
 	Start(cb func())
 }

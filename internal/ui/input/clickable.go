@@ -15,6 +15,10 @@ type Clickable struct {
 	isMouseDown bool
 }
 
+func (c *Clickable) Layout(w, h int) {
+	//TODO implement me
+}
+
 func (c *Clickable) Update() error {
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
 		x, y := ebiten.CursorPosition()
@@ -47,7 +51,7 @@ func (c *Clickable) Draw(*ebiten.Image) {
 	// no-op
 }
 
-// NewClickable creates a new Clickable to attach to other Drawables. The target bounds b
+// NewClickable creates a new Clickable to attach to other Children. The target bounds b
 // can be extended by providing a margin m.
 func NewClickable(b image.Rectangle, m int, oc func(), omd func(), omu func()) *Clickable {
 	insetBounds := b.Inset(-m / 2)

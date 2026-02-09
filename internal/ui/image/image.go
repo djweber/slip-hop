@@ -10,6 +10,10 @@ type Image struct {
 	img *ebiten.Image
 }
 
+func (i *Image) Layout(w, h int) {
+
+}
+
 func (i *Image) Draw(s *ebiten.Image) {
 	o := &ebiten.DrawImageOptions{}
 	o.GeoM.Translate(0, 0)

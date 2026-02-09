@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"image/color"
 	"time"
-
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 const (
@@ -22,35 +20,21 @@ const (
 )
 
 type Menu struct {
-	manager   *scene.Manager
-	drawables []ui.Drawable
+	*Config
+	*scene.Scene
 }
 
-func (m *Menu) Draw(img *ebiten.Image) {
-	for _, d := range m.drawables {
-		d.Draw(img)
+func (m *Menu) Layout(lw, lh int) {
+	if m.Children == nil {
+		m.initDrawables(m.Title, lw, lh)
+	}
+
+	for _, c := range m.Children {
+		c.Layout(lw, lh)
 	}
 }
 
-func (m *Menu) Update() error {
-	for _, d := range m.drawables {
-		err := d.Update()
-
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-type Config struct {
-	Title                     string
-	LayoutWidth, LayoutHeight int
-}
-
-func NewMenu(sm *scene.Manager, cfg *Config) *Menu {
-	var m *Menu
-
+func (m *Menu) initDrawables(title string, lw, lh int) {
 	var d []ui.Drawable
 
 	// background
@@ -62,10 +46,10 @@ func NewMenu(sm *scene.Manager, cfg *Config) *Menu {
 	ttf := asset.LoadTextFace(asset.Font04b03, 48)
 
 	tl := label.NewLabel(&label.Config{
-		Title:    cfg.Title,
+		Title:    title,
 		TextFace: ttf,
 		Color:    color.White,
-		X:        float64(cfg.LayoutWidth / 2),
+		X:        float64(lw / 2),
 		Y:        paddingTop,
 	})
 
@@ -77,10 +61,11 @@ func NewMenu(sm *scene.Manager, cfg *Config) *Menu {
 	pb := text_button.NewTextButton(&text_button.Config{
 		Text:     "Play",
 		TypeFace: btf,
-		X:        cfg.LayoutWidth / 2,
-		Y:        cfg.LayoutHeight / 2,
+		X:        lw / 2,
+		Y:        lh / 2,
 		OnClick: func() {
-			m.manager.Load(play.NewPlay(m.manager), &transition.CircularTransition{})
+			p := play.NewPlay(m.Navigator)
+			m.Navigator.Go(p, &transition.CircularTransition{})
 		},
 	})
 
@@ -95,16 +80,22 @@ func NewMenu(sm *scene.Manager, cfg *Config) *Menu {
 		Title:    ct,
 		TextFace: ctf,
 		Color:    color.NRGBA{R: 0xff, G: 0xff, B: 0xff, A: 0xff},
-		X:        float64(cfg.LayoutWidth / 2),
-		Y:        float64(cfg.LayoutHeight - paddingBottom),
+		X:        float64(lw / 2),
+		Y:        float64(lh - paddingBottom),
 	})
 
 	d = append(d, ctl)
 
-	m = &Menu{
-		manager:   sm,
-		drawables: d,
-	}
+	m.Children = d
+}
 
-	return m
+type Config struct {
+	Title string
+}
+
+func NewMenu(sm *scene.Navigator, cfg *Config) *Menu {
+	return &Menu{
+		cfg,
+		sm.NewScene(),
+	}
 }
