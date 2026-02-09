@@ -8,21 +8,21 @@ import (
 )
 
 type Game struct {
-	sceneManager              *scene.Navigator
+	navigator                 *scene.Navigator
 	layoutWidth, layoutHeight int
 }
 
 func (g *Game) Update() error {
-	err := g.sceneManager.Update()
+	err := g.navigator.Update()
 	return err
 }
 
 func (g *Game) Draw(img *ebiten.Image) {
-	g.sceneManager.Draw(img)
+	g.navigator.Draw(img)
 }
 
 func (g *Game) Layout(ww, wh int) (lw, lh int) {
-	g.sceneManager.Layout(g.layoutWidth, g.layoutHeight)
+	g.navigator.Layout(g.layoutWidth, g.layoutHeight)
 	return g.layoutWidth, g.layoutHeight
 }
 
@@ -44,7 +44,7 @@ func NewGame(config *Config) Game {
 	sm.Current = m
 
 	return Game{
-		sceneManager: sm,
+		navigator:    sm,
 		layoutWidth:  config.LayoutWidth,
 		layoutHeight: config.LayoutHeight,
 	}
