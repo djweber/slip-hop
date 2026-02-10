@@ -15,10 +15,6 @@ type Clickable struct {
 	isMouseDown bool
 }
 
-func (c *Clickable) Layout(w, h int) {
-	//TODO implement me
-}
-
 func (c *Clickable) Update() error {
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
 		x, y := ebiten.CursorPosition()

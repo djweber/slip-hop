@@ -2,6 +2,7 @@ package menu
 
 import (
 	"djweber/slip-hop/internal/asset"
+	"djweber/slip-hop/internal/config"
 	"djweber/slip-hop/internal/game/scene/play"
 	"djweber/slip-hop/internal/ui"
 	"djweber/slip-hop/internal/ui/image"
@@ -37,13 +38,6 @@ func (m *Menu) Update() error {
 	}
 
 	return nil
-}
-func (m *Menu) Layout(w, h int) {
-	if m.Children == nil {
-		m.init(m.Title, w, h)
-	}
-
-	m.BaseScene.Layout(w, h)
 }
 
 func (m *Menu) start() {
@@ -111,8 +105,12 @@ type Config struct {
 }
 
 func NewMenu(sm *scene.Navigator, cfg *Config) *Menu {
-	return &Menu{
+	m := &Menu{
 		cfg,
 		sm.NewScene(),
 	}
+
+	m.init(config.Title, config.LayoutWidth, config.LayoutHeight)
+
+	return m
 }

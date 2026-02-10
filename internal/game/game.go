@@ -1,6 +1,7 @@
 package game
 
 import (
+	"djweber/slip-hop/internal/config"
 	"djweber/slip-hop/internal/game/scene/menu"
 	"djweber/slip-hop/internal/ui/scene"
 
@@ -21,14 +22,12 @@ func (g *Game) Draw(img *ebiten.Image) {
 	g.navigator.Draw(img)
 }
 
-func (g *Game) Layout(_, _ int) (lw, lh int) {
-	g.navigator.Layout(g.layoutWidth, g.layoutHeight)
-	return g.layoutWidth, g.layoutHeight
+func (g *Game) Layout(_, _ int) (_, _ int) {
+	return config.LayoutWidth, config.LayoutHeight
 }
 
 type Config struct {
-	Title                     string
-	LayoutWidth, LayoutHeight int
+	Title string
 }
 
 func NewGame(config *Config) Game {
@@ -44,8 +43,6 @@ func NewGame(config *Config) Game {
 	n.Push(m, nil)
 
 	return Game{
-		navigator:    n,
-		layoutWidth:  config.LayoutWidth,
-		layoutHeight: config.LayoutHeight,
+		navigator: n,
 	}
 }

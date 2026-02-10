@@ -13,27 +13,6 @@ type Play struct {
 	player *player.Player
 }
 
-func (p *Play) Layout(w, h int) {
-	if p.player == nil {
-		pl := player.NewPlayer()
-		p.player = pl
-		p.Children = append(p.Children, pl)
-	}
-
-	// lay out our children
-	p.BaseScene.Layout(w, h)
-}
-
-func (p *Play) init() {
-	var d []ui.GameObject
-
-	bg := image.NewImage(asset.ImageBackground)
-
-	d = append(d, bg)
-
-	p.Children = d
-}
-
 func NewPlay(n *scene.Navigator) *Play {
 	p := &Play{
 		BaseScene: &scene.BaseScene{
@@ -43,7 +22,17 @@ func NewPlay(n *scene.Navigator) *Play {
 		player: nil,
 	}
 
-	p.init()
+	var d []ui.GameObject
 
+	bg := image.NewImage(asset.ImageBackground)
+
+	d = append(d, bg)
+
+	pl := player.NewPlayer()
+	p.player = pl
+
+	p.Children = append(p.Children, pl)
+
+	p.Children = d
 	return p
 }

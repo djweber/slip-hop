@@ -1,6 +1,7 @@
 package main
 
 import (
+	"djweber/slip-hop/internal/config"
 	"djweber/slip-hop/internal/game"
 	"djweber/slip-hop/internal/ui/window/theme"
 	"log"
@@ -9,21 +10,16 @@ import (
 )
 
 const (
-	title        = "SLIP-HOP"
-	layoutWidth  = 288
-	layoutHeight = 512
-	scale        = 2
+	title = "SLIP-HOP"
 )
 
 func main() {
 	ebiten.SetWindowTitle(title)
-	ebiten.SetWindowSize(layoutWidth*scale, layoutHeight*scale)
+	ebiten.SetWindowSize(config.LayoutWidth*config.Scale, config.LayoutHeight*config.Scale)
 	theme.ApplyTheme()
 
 	cfg := &game.Config{
-		Title:        title,
-		LayoutWidth:  layoutWidth,
-		LayoutHeight: layoutHeight,
+		Title: title,
 	}
 
 	g := game.NewGame(cfg)

@@ -11,9 +11,6 @@ type Label struct {
 	Config
 }
 
-func (l *Label) Layout(w, h int) {
-}
-
 func (l *Label) Update() error {
 	return nil
 }

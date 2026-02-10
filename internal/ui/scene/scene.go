@@ -13,12 +13,6 @@ type BaseScene struct {
 	Children []ui.GameObject
 }
 
-func (b *BaseScene) Layout(w, h int) {
-	for _, d := range b.Children {
-		d.Layout(w, h)
-	}
-}
-
 func (b *BaseScene) Update() error {
 	if b.Children == nil {
 		return nil

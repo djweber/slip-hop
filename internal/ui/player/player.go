@@ -67,17 +67,6 @@ func (p *Player) Draw(i *ebiten.Image) {
 	vector.FillRect(i, float32(p.X), float32(p.Y), float32(size), float32(size), color.White, false)
 }
 
-func (p *Player) Layout(w, h int) {
-	p.lw = float64(w)
-	p.lh = float64(h)
-
-	if !p.isPositioned {
-		p.X = p.lw/2 - size/2
-		p.Y = p.lh - size
-		p.isPositioned = true
-	}
-}
-
 func NewPlayer() *Player {
 	return &Player{
 		jumpHeight:   100,

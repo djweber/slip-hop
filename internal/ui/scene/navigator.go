@@ -11,16 +11,6 @@ type Navigator struct {
 	transition Transition
 }
 
-func (n *Navigator) Layout(w, h int) {
-	for _, s := range n.scenes {
-		s.Layout(w, h)
-	}
-
-	if n.transition != nil {
-		n.transition.Layout(w, h)
-	}
-}
-
 func (n *Navigator) Update() error {
 	for _, s := range n.scenes {
 		err := s.Update()

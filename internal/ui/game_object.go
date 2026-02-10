@@ -7,5 +7,4 @@ import (
 type GameObject interface {
 	Update() error
 	Draw(i *ebiten.Image)
-	Layout(w, h int)
 }
