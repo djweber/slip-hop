@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	size float64 = 32
+	size float64 = 24
 )
 
 type Player struct {

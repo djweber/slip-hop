@@ -1,8 +1,11 @@
 package config
 
+var (
+	Scale = 1
+)
+
 const (
 	Title        = "SLIP-HOP"
-	LayoutWidth  = 288
+	LayoutWidth  = 384
 	LayoutHeight = 512
-	Scale        = 2
 )
