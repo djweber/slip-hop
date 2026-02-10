@@ -10,28 +10,40 @@ import (
 
 type Play struct {
 	*scene.BaseScene
+	player *player.Player
 }
 
 func (p *Play) Layout(w, h int) {
-	if p.Children == nil {
-		var d []ui.GameObject
-
-		bg := image.NewImage(asset.ImageBackground)
-
-		d = append(d, bg)
-
-		pl := player.NewPlayer(float32(w/2), float32(h))
-
-		d = append(d, pl)
-
-		p.Children = d
+	if p.player == nil {
+		pl := player.NewPlayer()
+		p.player = pl
+		p.Children = append(p.Children, pl)
 	}
+
+	// lay out our children
+	p.BaseScene.Layout(w, h)
+}
+
+func (p *Play) init() {
+	var d []ui.GameObject
+
+	bg := image.NewImage(asset.ImageBackground)
+
+	d = append(d, bg)
+
+	p.Children = d
 }
 
 func NewPlay(n *scene.Navigator) *Play {
-	return &Play{
-		&scene.BaseScene{
+	p := &Play{
+		BaseScene: &scene.BaseScene{
 			Navigator: n,
+			Children:  nil,
 		},
+		player: nil,
 	}
+
+	p.init()
+
+	return p
 }

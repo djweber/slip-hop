@@ -12,6 +12,9 @@ import (
 	"fmt"
 	"image/color"
 	"time"
+
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 const (
@@ -24,17 +27,32 @@ type Menu struct {
 	*scene.BaseScene
 }
 
+func (m *Menu) Update() error {
+	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+		m.start()
+	}
+
+	if err := m.BaseScene.Update(); err != nil {
+		return err
+	}
+
+	return nil
+}
 func (m *Menu) Layout(w, h int) {
 	if m.Children == nil {
-		m.initDrawables(m.Title, w, h)
+		m.init(m.Title, w, h)
 	}
 
-	for _, c := range m.Children {
-		c.Layout(w, h)
-	}
+	m.BaseScene.Layout(w, h)
 }
 
-func (m *Menu) initDrawables(title string, lw, lh int) {
+func (m *Menu) start() {
+	p := play.NewPlay(m.Navigator)
+	m.Navigator.Pop()
+	m.Navigator.Push(p, &transition.CircularTransition{})
+}
+
+func (m *Menu) init(title string, lw, lh int) {
 	var d []ui.GameObject
 
 	// background
@@ -64,8 +82,7 @@ func (m *Menu) initDrawables(title string, lw, lh int) {
 		X:        lw / 2,
 		Y:        lh / 2,
 		OnClick: func() {
-			p := play.NewPlay(m.Navigator)
-			m.Navigator.Push(p, &transition.CircularTransition{})
+			m.start()
 		},
 	})
 
