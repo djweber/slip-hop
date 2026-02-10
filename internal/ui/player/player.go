@@ -1,6 +1,7 @@
 package player
 
 import (
+	"djweber/slip-hop/internal/config"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -18,7 +19,6 @@ type Player struct {
 	isDoubleJump             bool
 	isPositioned             bool
 	isGrounded               bool
-	lw, lh                   float64
 	jumpHeight, jumpPeakTime float64
 	vY                       float64
 }
@@ -32,9 +32,9 @@ func (p *Player) Update() error {
 		p.Y += p.vY * dt
 	}
 
-	if !p.isGrounded && p.Y >= p.lh-size {
+	if !p.isGrounded && p.Y >= config.LayoutHeight-size {
 		p.isGrounded = true
-		p.Y = p.lh - size
+		p.Y = config.LayoutHeight - size
 		p.isDoubleJump = false
 	}
 
@@ -58,20 +58,22 @@ func (p *Player) Update() error {
 	return nil
 }
 
+func (p *Player) Draw(i *ebiten.Image) {
+	vector.FillRect(i, float32(p.X), float32(p.Y), float32(size), float32(size), color.White, false)
+}
+
 func (p *Player) jump() {
 	p.isGrounded = false
 	p.vY = -2 * p.jumpHeight / p.jumpPeakTime
 }
 
-func (p *Player) Draw(i *ebiten.Image) {
-	vector.FillRect(i, float32(p.X), float32(p.Y), float32(size), float32(size), color.White, false)
-}
-
 func NewPlayer() *Player {
 	return &Player{
+		X:            float64(config.LayoutWidth/2) - size/2,
+		Y:            float64(config.LayoutHeight) - size,
+		MoveSpeed:    6.0,
 		jumpHeight:   100,
 		jumpPeakTime: 0.25,
 		isGrounded:   true,
-		MoveSpeed:    6.0,
 	}
 }

@@ -4,7 +4,6 @@ import (
 	"djweber/slip-hop/internal/asset"
 	"djweber/slip-hop/internal/config"
 	"djweber/slip-hop/internal/game/scene/play"
-	"djweber/slip-hop/internal/ui"
 	"djweber/slip-hop/internal/ui/image"
 	"djweber/slip-hop/internal/ui/label"
 	"djweber/slip-hop/internal/ui/scene"
@@ -46,26 +45,24 @@ func (m *Menu) start() {
 	m.Navigator.Push(p, &transition.CircularTransition{})
 }
 
-func (m *Menu) init(title string, lw, lh int) {
-	var d []ui.GameObject
-
+func (m *Menu) init() {
 	// background
 	bg := image.NewImage(asset.ImageBackground)
 
-	d = append(d, bg)
+	m.Add(bg)
 
 	// title
 	ttf := asset.LoadTextFace(asset.Font04b03, 48)
 
 	tl := label.NewLabel(&label.Config{
-		Title:    title,
+		Title:    config.Title,
 		TextFace: ttf,
 		Color:    color.White,
-		X:        float64(lw / 2),
+		X:        float64(config.LayoutWidth / 2),
 		Y:        paddingTop,
 	})
 
-	d = append(d, tl)
+	m.Add(tl)
 
 	// play button
 	btf := asset.LoadTextFace(asset.Font04b03, 16)
@@ -73,14 +70,14 @@ func (m *Menu) init(title string, lw, lh int) {
 	pb := text_button.NewTextButton(&text_button.Config{
 		Text:     "Play",
 		TypeFace: btf,
-		X:        lw / 2,
-		Y:        lh / 2,
+		X:        config.LayoutWidth / 2,
+		Y:        config.LayoutHeight / 2,
 		OnClick: func() {
 			m.start()
 		},
 	})
 
-	d = append(d, pb)
+	m.Add(pb)
 
 	// copyright
 	ctf := asset.LoadTextFace(asset.Font04b03, 8)
@@ -91,13 +88,11 @@ func (m *Menu) init(title string, lw, lh int) {
 		Title:    ct,
 		TextFace: ctf,
 		Color:    color.NRGBA{R: 0xff, G: 0xff, B: 0xff, A: 0xff},
-		X:        float64(lw / 2),
-		Y:        float64(lh - paddingBottom),
+		X:        float64(config.LayoutWidth / 2),
+		Y:        float64(config.LayoutHeight - paddingBottom),
 	})
 
-	d = append(d, ctl)
-
-	m.Children = d
+	m.Add(ctl)
 }
 
 type Config struct {
@@ -110,7 +105,7 @@ func NewMenu(sm *scene.Navigator, cfg *Config) *Menu {
 		sm.NewScene(),
 	}
 
-	m.init(config.Title, config.LayoutWidth, config.LayoutHeight)
+	m.init()
 
 	return m
 }

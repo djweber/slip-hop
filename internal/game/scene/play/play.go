@@ -2,7 +2,6 @@ package play
 
 import (
 	"djweber/slip-hop/internal/asset"
-	"djweber/slip-hop/internal/ui"
 	"djweber/slip-hop/internal/ui/image"
 	"djweber/slip-hop/internal/ui/player"
 	"djweber/slip-hop/internal/ui/scene"
@@ -17,22 +16,13 @@ func NewPlay(n *scene.Navigator) *Play {
 	p := &Play{
 		BaseScene: &scene.BaseScene{
 			Navigator: n,
-			Children:  nil,
 		},
 		player: nil,
 	}
-
-	var d []ui.GameObject
-
 	bg := image.NewImage(asset.ImageBackground)
-
-	d = append(d, bg)
-
+	p.Add(bg)
 	pl := player.NewPlayer()
+	p.Add(pl)
 	p.player = pl
-
-	p.Children = append(p.Children, pl)
-
-	p.Children = d
 	return p
 }

@@ -10,15 +10,19 @@ import (
 // It includes boilerplate behavior for rendering and laying out its children.
 type BaseScene struct {
 	*Navigator
-	Children []ui.GameObject
+	children []ui.GameObject
+}
+
+func (b *BaseScene) Add(child ui.GameObject) {
+	b.children = append(b.children, child)
 }
 
 func (b *BaseScene) Update() error {
-	if b.Children == nil {
+	if b.children == nil {
 		return nil
 	}
 
-	for _, d := range b.Children {
+	for _, d := range b.children {
 		err := d.Update()
 
 		if err != nil {
@@ -30,11 +34,11 @@ func (b *BaseScene) Update() error {
 }
 
 func (b *BaseScene) Draw(img *ebiten.Image) {
-	if b.Children == nil {
+	if b.children == nil {
 		return
 	}
 
-	for _, d := range b.Children {
+	for _, d := range b.children {
 		d.Draw(img)
 	}
 }
