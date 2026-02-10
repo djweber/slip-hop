@@ -71,7 +71,7 @@ func NewPlayer() *Player {
 	return &Player{
 		X:            float64(config.LayoutWidth/2) - size/2,
 		Y:            float64(config.LayoutHeight) - size,
-		MoveSpeed:    6.0,
+		MoveSpeed:    5.0,
 		jumpHeight:   100,
 		jumpPeakTime: 0.25,
 		isGrounded:   true,

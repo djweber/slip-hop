@@ -15,7 +15,7 @@ const (
 
 func main() {
 	ebiten.SetWindowTitle(title)
-	ebiten.SetWindowSize(config.LayoutWidth*config.Scale, config.LayoutHeight*config.Scale)
+	ebiten.SetWindowSize(int(config.LayoutWidth*config.Scale), int(config.LayoutHeight*config.Scale))
 	theme.ApplyTheme()
 
 	cfg := &game.Config{
