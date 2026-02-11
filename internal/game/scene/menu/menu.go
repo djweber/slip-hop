@@ -80,7 +80,7 @@ func (m *Menu) init() {
 	m.Add(pb)
 
 	// copyright
-	ctf := asset.LoadTextFace(asset.Font04b03, 8)
+	ctf := asset.LoadTextFace(asset.Font04b03, 10)
 
 	ct := fmt.Sprintf("(c) %s %d", "LOCK ON", time.Now().Year())
 

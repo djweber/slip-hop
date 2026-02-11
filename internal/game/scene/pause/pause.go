@@ -21,7 +21,6 @@ func NewPause(m *scene.Navigator) *Pause {
 	return &Pause{
 		&scene.BaseScene{
 			Navigator: m,
-			Children:  d,
 		},
 	}
 }
