@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	size float64 = 24
+	size float64 = 20
 )
 
 type Player struct {
@@ -27,6 +27,9 @@ func (p *Player) Update() error {
 	dt := 1.0 / 60.0
 	g := 2 * p.jumpHeight / (p.jumpPeakTime * p.jumpPeakTime)
 
+	cX := p.X
+	cY := p.Y
+
 	if !p.isGrounded {
 		p.vY += g * dt
 		p.Y += p.vY * dt
@@ -38,11 +41,11 @@ func (p *Player) Update() error {
 		p.isDoubleJump = false
 	}
 
-	if ebiten.IsKeyPressed(ebiten.KeyA) {
+	if p.isGrounded && ebiten.IsKeyPressed(ebiten.KeyA) {
 		p.X -= p.MoveSpeed
 	}
 
-	if ebiten.IsKeyPressed(ebiten.KeyD) {
+	if p.isGrounded && ebiten.IsKeyPressed(ebiten.KeyD) {
 		p.X += p.MoveSpeed
 	}
 
@@ -55,11 +58,20 @@ func (p *Player) Update() error {
 		p.jump()
 	}
 
+	if !p.isInBounds() {
+		p.X = cX
+		p.Y = cY
+	}
+
 	return nil
 }
 
 func (p *Player) Draw(i *ebiten.Image) {
 	vector.FillRect(i, float32(p.X), float32(p.Y), float32(size), float32(size), color.White, false)
+}
+
+func (p *Player) isInBounds() bool {
+	return p.X >= 0 && p.X <= config.LayoutWidth-size && p.Y >= 0 && p.Y <= config.LayoutHeight-size
 }
 
 func (p *Player) jump() {
@@ -71,8 +83,8 @@ func NewPlayer() *Player {
 	return &Player{
 		X:            float64(config.LayoutWidth/2) - size/2,
 		Y:            float64(config.LayoutHeight) - size,
-		MoveSpeed:    5.0,
-		jumpHeight:   100,
+		MoveSpeed:    4.0,
+		jumpHeight:   64,
 		jumpPeakTime: 0.25,
 		isGrounded:   true,
 	}

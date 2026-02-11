@@ -52,7 +52,7 @@ func (m *Menu) init() {
 	m.Add(bg)
 
 	// title
-	ttf := asset.LoadTextFace(asset.Font04b03, 48)
+	ttf := asset.LoadTextFace(asset.Font04b03, 32)
 
 	tl := label.NewLabel(&label.Config{
 		Title:    config.Title,
