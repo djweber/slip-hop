@@ -6,6 +6,6 @@ var (
 
 const (
 	Title        = "SLIP-HOP"
-	LayoutWidth  = 288
-	LayoutHeight = 512
+	LayoutWidth  = 320
+	LayoutHeight = 480
 )
